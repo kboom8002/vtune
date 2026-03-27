@@ -2,7 +2,7 @@
 
 import { useState, useEffect } from "react";
 import { motion, AnimatePresence } from "framer-motion";
-import { Sparkles, MessageCircle, Send, CheckCircle, ShieldAlert } from "lucide-react";
+import { Sparkles, MessageCircle, CheckCircle, ShieldAlert, Copy, Star, RefreshCcw } from "lucide-react";
 
 export default function VibeOSMain() {
   const [cards, setCards] = useState<any[]>([]);
@@ -13,8 +13,12 @@ export default function VibeOSMain() {
   const [status, setStatus] = useState<"intake" | "loading" | "results">("intake");
   const [sessionId, setSessionId] = useState<string>("");
   const [variants, setVariants] = useState<any[]>([]);
+  
+  // UX State
   const [pickedVariant, setPickedVariant] = useState<string>("");
-  const [ratings, setRatings] = useState({ tone_match: 5, usefulness: 5 });
+  const [ratingVal, setRatingVal] = useState(0);
+  const [isSubmitted, setIsSubmitted] = useState(false);
+  const [copiedId, setCopiedId] = useState("");
 
   useEffect(() => {
     fetch('/api/tone-cards')
@@ -27,6 +31,9 @@ export default function VibeOSMain() {
     e.preventDefault();
     if (!rawText.trim() || !selectedCard) return;
     setStatus("loading");
+    setPickedVariant("");
+    setIsSubmitted(false);
+    setRatingVal(0);
     
     try {
       const res = await fetch("/api/rewrite", {
@@ -47,16 +54,39 @@ export default function VibeOSMain() {
     }
   };
 
-  const handlePick = async (vid: string) => {
+  const handleCopyAndSelect = (vid: string, text: string) => {
+    if (navigator.clipboard) {
+      navigator.clipboard.writeText(text);
+      setCopiedId(vid);
+      setTimeout(() => setCopiedId(""), 2000);
+    }
+    setPickedVariant(vid);
+  };
+
+  const handleSubmitRating = async () => {
+    if (!pickedVariant || ratingVal === 0) return;
+    setIsSubmitted(true);
+    
     try {
       await fetch('/api/pick', {
         method: 'POST', headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ session_id: sessionId, picked_variant_id: vid, ratings })
+        body: JSON.stringify({ 
+          session_id: sessionId, 
+          picked_variant_id: pickedVariant, 
+          ratings: { tone_match: ratingVal, usefulness: ratingVal } 
+        })
       });
-      setPickedVariant(vid);
     } catch (e) {
       console.error(e);
     }
+  };
+
+  const handleRestart = () => {
+    setRawText("");
+    setStatus("intake");
+    setPickedVariant("");
+    setIsSubmitted(false);
+    setRatingVal(0);
   };
 
   return (
@@ -131,30 +161,59 @@ export default function VibeOSMain() {
           <motion.div key="results" initial={{ opacity: 0, x: 20 }} animate={{ opacity: 1, x: 0 }} className="flex flex-col gap-6 w-full">
             <div className="flex items-center justify-between">
               <h2 className="text-xl font-bold">생성된 대안 (3가지)</h2>
-              <button className="text-sm text-primary underline" onClick={() => { setStatus('intake'); setPickedVariant(''); }}>다시 시도</button>
             </div>
             
             <div className="flex flex-col gap-4">
-              {variants.map((v, i) => (
-                <div key={v.variant_id} className={`glass-card p-5 ${pickedVariant === v.variant_id ? 'ring-2 ring-primary bg-primary/5' : ''}`}>
+              {variants.map((v) => (
+                <div key={v.variant_id} className={`glass-card p-5 ${pickedVariant === v.variant_id ? 'ring-2 ring-primary bg-primary/10' : ''} ${isSubmitted && pickedVariant !== v.variant_id ? 'opacity-30 pointer-events-none' : ''}`}>
                   <div className="flex justify-between items-start mb-3">
-                    <span className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold text-white/80 uppercase tracking-widest">{v.variant_id === 'v1' ? '기준형 (μ)' : v.variant_id === 'v2' ? '안전형 (Rel)' : '명료형 (Clarity)'}</span>
-                    {v.axes_delta_l2 > 0.20 && <ShieldAlert className="w-5 h-5 text-red-400" />}
+                    <span className="px-3 py-1 bg-white/10 rounded-full text-xs font-bold text-white/80 uppercase tracking-widest">
+                      {v.variant_id === 'v1' ? '기준형 (μ)' : v.variant_id === 'v2' ? '안전형 (Rel)' : '명료형 (Clarity)'}
+                    </span>
+                    <div className="flex gap-2 items-center">
+                      {v.axes_delta_l2 > 0.20 && <ShieldAlert className="w-5 h-5 text-red-400" />}
+                      <button onClick={() => handleCopyAndSelect(v.variant_id, v.text)} className="p-2 bg-white/5 hover:bg-white/10 rounded-lg text-white/70 transition-colors" title="복사하기">
+                        {copiedId === v.variant_id ? <CheckCircle className="w-4 h-4 text-green-400" /> : <Copy className="w-4 h-4" />}
+                      </button>
+                    </div>
                   </div>
                   <p className="text-[15px] leading-relaxed whitespace-pre-wrap">{v.text}</p>
                   
                   <div className="mt-4 pt-4 border-t border-white/10 flex flex-col gap-2">
-                    <p className="text-xs text-white/50"><strong>근거:</strong> {v.target_axes ? (v as any).one_line_rationale || '' : ''}</p>
-                    <p className="text-[10px] text-white/40 font-mono tracking-tighter mix-blend-screen opacity-50">L2: {v.axes_delta_l2?.toFixed(3)}</p>
+                    <p className="text-[11px] text-white/50"><strong>근거:</strong> {v.one_line_rationale || ''}</p>
+                    <p className="text-[10px] text-white/30 font-mono tracking-tighter mix-blend-screen opacity-50">L2: {v.axes_delta_l2?.toFixed(3)}</p>
                   </div>
 
                   {!pickedVariant && (
-                   <button onClick={() => handlePick(v.variant_id)} className="mt-4 w-full bg-white/5 hover:bg-primary/20 hover:text-primary transition-colors py-2 rounded-lg text-sm font-semibold flex justify-center items-center gap-2">
-                     <CheckCircle className="w-4 h-4"/> 이 버전 선택하기 (연구 참여)
+                   <button onClick={() => handleCopyAndSelect(v.variant_id, v.text)} className="mt-4 w-full bg-primary/20 hover:bg-primary/40 text-primary-glow font-bold transition-colors py-3 rounded-xl text-sm flex justify-center items-center gap-2">
+                     <Copy className="w-4 h-4"/> 이 버전 복사 및 연구 참여 (선택)
                    </button>
                   )}
-                  {pickedVariant === v.variant_id && (
-                    <div className="mt-4 text-primary text-sm font-bold flex gap-2 justify-center items-center bg-primary/10 py-2 rounded-lg"><CheckCircle className="w-4 h-4"/> 선택 완료 됨</div>
+
+                  {pickedVariant === v.variant_id && !isSubmitted && (
+                    <motion.div initial={{ opacity: 0, height: 0 }} animate={{ opacity: 1, height: 'auto' }} className="mt-6 pt-4 border-t border-white/10 overflow-hidden text-center">
+                      <p className="text-sm font-semibold mb-1 text-white/90">복사되었습니다!</p>
+                      <p className="text-xs text-white/60 font-medium mb-4">문장을 확인해 보셨다면, 발송 후 기분이 얼마나 향상될 것 같은지 알려주세요.</p>
+                      <div className="flex justify-center gap-2 mb-4">
+                        {[1, 2, 3, 4, 5].map((s) => (
+                           <button key={s} onClick={() => setRatingVal(s)} className={`p-3 rounded-full transition-all ${ratingVal >= s ? 'bg-yellow-400/20 text-yellow-500 scale-110' : 'bg-white/5 text-white/20'}`}>
+                             <Star className="w-6 h-6 fill-current" />
+                           </button>
+                        ))}
+                      </div>
+                      <button disabled={ratingVal === 0} onClick={handleSubmitRating} className="w-full bg-primary/90 hover:bg-primary py-3 rounded-xl font-bold disabled:opacity-50 disabled:cursor-not-allowed transition-all mt-2">
+                        평가 제출하기
+                      </button>
+                    </motion.div>
+                  )}
+
+                  {pickedVariant === v.variant_id && isSubmitted && (
+                    <motion.div initial={{ opacity: 0 }} animate={{ opacity: 1 }} className="mt-4 text-center">
+                       <p className="text-green-400 font-bold flex justify-center gap-2 items-center mb-4"><CheckCircle className="w-5 h-5"/> 평가 및 기록 완료</p>
+                       <button onClick={handleRestart} className="glass-button w-full flex justify-center items-center gap-2">
+                         <RefreshCcw className="w-4 h-4"/> 새로운 문장 교정하기
+                       </button>
+                    </motion.div>
                   )}
                 </div>
               ))}
