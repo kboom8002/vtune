@@ -1,0 +1,27 @@
+{
+  "type": "object",
+  "properties": {
+    "affect": {
+      "type": "object",
+      "properties": {
+        "warmth": { "type": "number" },
+        "energy": { "type": "number" },
+        "empathy": { "type": "number" },
+        "professionalism": { "type": "number" }
+      },
+      "required": ["warmth", "energy", "empathy", "professionalism"]
+    },
+    "semantic": {
+      "type": "object",
+      "properties": {
+        "clarity": { "type": "number" },
+        "assertiveness": { "type": "number" },
+        "hedging": { "type": "number" },
+        "structure": { "type": "number" }
+      },
+      "required": ["clarity", "assertiveness", "hedging", "structure"]
+    }
+  },
+  "required": ["affect", "semantic"],
+  "additionalProperties": false
+}

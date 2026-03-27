@@ -1,0 +1,59 @@
+{
+  "type": "object",
+  "properties": {
+    "rewrite_bundle": {
+      "type": "object",
+      "properties": {
+        "tone_card_id": { "type": "string" },
+        "channel": { "type": "string" },
+        "rewrites": {
+          "type": "array",
+          "items": {
+            "type": "object",
+            "properties": {
+              "variant_id": { "type": "string", "enum": ["v1", "v2", "v3"] },
+              "text": { "type": "string" },
+              "one_line_rationale": { "type": "string" },
+              "self_check": {
+                "type": "object",
+                "properties": {
+                  "axes_alignment": {
+                    "type": "object",
+                    "properties": {
+                      "affect": {
+                        "type": "object",
+                        "properties": {
+                          "warmth": { "type": "number" },
+                          "energy": { "type": "number" },
+                          "empathy": { "type": "number" },
+                          "professionalism": { "type": "number" }
+                        },
+                        "required": ["warmth", "energy", "empathy", "professionalism"]
+                      },
+                      "semantic": {
+                        "type": "object",
+                        "properties": {
+                          "clarity": { "type": "number" },
+                          "assertiveness": { "type": "number" },
+                          "hedging": { "type": "number" },
+                          "structure": { "type": "number" }
+                        },
+                        "required": ["clarity", "assertiveness", "hedging", "structure"]
+                      }
+                    },
+                    "required": ["affect", "semantic"]
+                  }
+                },
+                "required": ["axes_alignment"]
+              }
+            },
+            "required": ["variant_id", "text", "one_line_rationale", "self_check"]
+          }
+        }
+      },
+      "required": ["tone_card_id", "channel", "rewrites"]
+    }
+  },
+  "required": ["rewrite_bundle"],
+  "additionalProperties": false
+}

@@ -1,0 +1,477 @@
+{
+  "pack_id": "qpe-tonecards-officewomen-ko",
+  "pack_name": "직장 여성 코퍼스 톤(장르어 카드) 20종",
+  "spec": {
+    "qpexs": "0.2.x",
+    "schema_strict": true,
+    "notes": "Affect(정동) + Semantic(세만틱) 축을 수치로 고정해 재현/개선 가능하게 운영. axes_delta<=0.20 게이트 기본."
+  },
+  "axes_def": {
+    "affect": {
+      "warmth": "상대에 대한 호의/존중/온기 신호",
+      "energy": "활기/추진감/속도감(각성) 신호",
+      "empathy": "공감/배려/감정 라벨링 정도",
+      "professionalism": "업무적 품격/격식/프로 톤"
+    },
+    "semantic": {
+      "clarity": "두괄/명료/오해 최소화",
+      "assertiveness": "요구/경계/결정의 분명함",
+      "hedging": "완곡/완충(높을수록 우회적)",
+      "structure": "근거/조건/선택지/논리 구조"
+    }
+  },
+  "sampling_policy": {
+    "n_variants": 3,
+    "method": "truncated_normal",
+    "sigma_scale": 1.0,
+    "clamp_0_1": true,
+    "gate_axes_delta_l1_max": 0.2,
+    "variant_style_hint": [
+      "v1: 카드 μ에 가장 근접(기준형)",
+      "v2: μ±σ 중 Warmth/Empathy 쪽 조금 강화(관계 안전형)",
+      "v3: μ±σ 중 Clarity/Assertiveness 쪽 조금 강화(결정/경계형)"
+    ]
+  },
+  "cards": [
+    {
+      "card_id": "TC01",
+      "display_name": "따뜻하지만 단호하게",
+      "genre_words": ["따뜻하지만 단호하게", "부드럽게 선 긋기"],
+      "best_for": ["거절", "경계 설정", "요청 거절/조건 제시"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.78, "energy": 0.42, "empathy": 0.62, "professionalism": 0.82},
+        "semantic": {"clarity": 0.86, "assertiveness": 0.74, "hedging": 0.38, "structure": 0.78}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.05, "empathy": 0.06, "professionalism": 0.05},
+        "semantic": {"clarity": 0.05, "assertiveness": 0.06, "hedging": 0.06, "structure": 0.05}
+      },
+      "vad_mu": {"valence": 0.62, "arousal": 0.42, "dominance": 0.68},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.80, "energy": 0.40, "polish": 0.75, "authentic": 0.55, "heritage": 0.30, "futuristic": 0.35, "playful": 0.20},
+      "l2_mu": {"scm": {"warmth": 0.70, "competence": 0.75}, "rft": {"promotion": 0.35, "prevention": 0.65}},
+      "guards": {
+        "must": ["경계/요청은 한 문장으로 명확히", "상대 비난 금지"],
+        "avoid": ["비꼼", "수동공격", "과잉사과(약자 포지션)"]
+      }
+    },
+    {
+      "card_id": "TC02",
+      "display_name": "차분하고 프로답게(감정 최소)",
+      "genre_words": ["차분하게", "프로답게", "감정 최소"],
+      "best_for": ["업무 보고", "상사/외부 커뮤니케이션", "민감 이슈"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.48, "energy": 0.32, "empathy": 0.25, "professionalism": 0.93},
+        "semantic": {"clarity": 0.92, "assertiveness": 0.62, "hedging": 0.32, "structure": 0.88}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.05, "empathy": 0.05, "professionalism": 0.03},
+        "semantic": {"clarity": 0.04, "assertiveness": 0.06, "hedging": 0.06, "structure": 0.05}
+      },
+      "vad_mu": {"valence": 0.52, "arousal": 0.30, "dominance": 0.60},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.07, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.45, "energy": 0.30, "polish": 0.90, "authentic": 0.45, "heritage": 0.30, "futuristic": 0.35, "playful": 0.10},
+      "l2_mu": {"scm": {"warmth": 0.40, "competence": 0.88}, "rft": {"promotion": 0.35, "prevention": 0.65}},
+      "guards": {
+        "must": ["두괄식", "불확실성은 조건문으로 표기"],
+        "avoid": ["감정 과잉", "상대 탓"]
+      }
+    },
+    {
+      "card_id": "TC03",
+      "display_name": "예의 바르게 경계 설정",
+      "genre_words": ["예의 있게", "정중한 경계", "거리 유지"],
+      "best_for": ["불편한 요청 거절", "업무 범위 조정", "야근/긴급 요구 대응"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.66, "energy": 0.38, "empathy": 0.48, "professionalism": 0.86},
+        "semantic": {"clarity": 0.88, "assertiveness": 0.78, "hedging": 0.40, "structure": 0.82}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.06, "professionalism": 0.04},
+        "semantic": {"clarity": 0.05, "assertiveness": 0.06, "hedging": 0.06, "structure": 0.05}
+      },
+      "vad_mu": {"valence": 0.58, "arousal": 0.36, "dominance": 0.72},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.65, "energy": 0.35, "polish": 0.85, "authentic": 0.50, "heritage": 0.30, "futuristic": 0.30, "playful": 0.10},
+      "l2_mu": {"scm": {"warmth": 0.60, "competence": 0.80}, "rft": {"promotion": 0.30, "prevention": 0.70}},
+      "guards": {
+        "must": ["경계 문장 1개", "대안/다음 액션 1개"],
+        "avoid": ["장황한 변명", "감정적 폭발"]
+      }
+    },
+    {
+      "card_id": "TC04",
+      "display_name": "신뢰·근거 중심(팩트 톤)",
+      "genre_words": ["근거 중심", "팩트 톤", "정리해서"],
+      "best_for": ["설명", "보고", "이견 조율", "오해 해소"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.42, "energy": 0.40, "empathy": 0.20, "professionalism": 0.92},
+        "semantic": {"clarity": 0.94, "assertiveness": 0.66, "hedging": 0.28, "structure": 0.94}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.05, "professionalism": 0.03},
+        "semantic": {"clarity": 0.03, "assertiveness": 0.06, "hedging": 0.05, "structure": 0.03}
+      },
+      "vad_mu": {"valence": 0.50, "arousal": 0.42, "dominance": 0.64},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.40, "energy": 0.40, "polish": 0.90, "authentic": 0.45, "heritage": 0.25, "futuristic": 0.35, "playful": 0.10},
+      "l2_mu": {"scm": {"warmth": 0.35, "competence": 0.92}, "rft": {"promotion": 0.40, "prevention": 0.60}},
+      "guards": {
+        "must": ["핵심 3줄", "조건/기준 명시"],
+        "avoid": ["추정 단정", "감정 호소로 논점 흐림"]
+      }
+    },
+    {
+      "card_id": "TC05",
+      "display_name": "부드럽게 요청(부담 최소)",
+      "genre_words": ["부드럽게 요청", "부담 없게 부탁"],
+      "best_for": ["도움 요청", "리소스 부탁", "협업 제안"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.82, "energy": 0.44, "empathy": 0.66, "professionalism": 0.74},
+        "semantic": {"clarity": 0.78, "assertiveness": 0.46, "hedging": 0.58, "structure": 0.72}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.06, "professionalism": 0.06},
+        "semantic": {"clarity": 0.06, "assertiveness": 0.07, "hedging": 0.06, "structure": 0.06}
+      },
+      "vad_mu": {"valence": 0.70, "arousal": 0.44, "dominance": 0.46},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.85, "energy": 0.45, "polish": 0.70, "authentic": 0.55, "heritage": 0.25, "futuristic": 0.25, "playful": 0.20},
+      "l2_mu": {"scm": {"warmth": 0.85, "competence": 0.60}, "rft": {"promotion": 0.45, "prevention": 0.55}},
+      "guards": {
+        "must": ["선택권(시간/범위) 제공", "감사 1문장"],
+        "avoid": ["압박", "당연시"]
+      }
+    },
+    {
+      "card_id": "TC06",
+      "display_name": "단호하게 거절(짧고 명확)",
+      "genre_words": ["단호하게 거절", "짧게 NO"],
+      "best_for": ["불필요한 요청 차단", "업무 범위/시간 방어"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.42, "energy": 0.48, "empathy": 0.20, "professionalism": 0.78},
+        "semantic": {"clarity": 0.92, "assertiveness": 0.88, "hedging": 0.18, "structure": 0.70}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.05, "professionalism": 0.05},
+        "semantic": {"clarity": 0.04, "assertiveness": 0.05, "hedging": 0.05, "structure": 0.06}
+      },
+      "vad_mu": {"valence": 0.45, "arousal": 0.50, "dominance": 0.84},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.40, "energy": 0.50, "polish": 0.75, "authentic": 0.55, "heritage": 0.25, "futuristic": 0.25, "playful": 0.05},
+      "l2_mu": {"scm": {"warmth": 0.30, "competence": 0.75}, "rft": {"promotion": 0.25, "prevention": 0.75}},
+      "guards": {
+        "must": ["거절 1문장", "대안(가능하면) 1문장"],
+        "avoid": ["사유 과다", "감정 공격"]
+      }
+    },
+    {
+      "card_id": "TC07",
+      "display_name": "사과·해명(책임+재발방지)",
+      "genre_words": ["사과", "설명", "재발 방지"],
+      "best_for": ["업무 실수", "오해", "지연"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.72, "energy": 0.34, "empathy": 0.78, "professionalism": 0.86},
+        "semantic": {"clarity": 0.88, "assertiveness": 0.54, "hedging": 0.44, "structure": 0.86}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.06, "professionalism": 0.04},
+        "semantic": {"clarity": 0.05, "assertiveness": 0.06, "hedging": 0.06, "structure": 0.05}
+      },
+      "vad_mu": {"valence": 0.56, "arousal": 0.32, "dominance": 0.52},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.70, "energy": 0.30, "polish": 0.85, "authentic": 0.65, "heritage": 0.25, "futuristic": 0.25, "playful": 0.05},
+      "l2_mu": {"scm": {"warmth": 0.75, "competence": 0.75}, "rft": {"promotion": 0.25, "prevention": 0.75}},
+      "guards": {
+        "must": ["사실 인정", "영향 공감", "재발방지/다음 액션"],
+        "avoid": ["변명처럼 들리는 표현", "책임 전가"]
+      }
+    },
+    {
+      "card_id": "TC08",
+      "display_name": "피드백 전달(존중+개선)",
+      "genre_words": ["피드백", "개선 제안", "존중"],
+      "best_for": ["동료 피드백", "리뷰", "협업 갈등 예방"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.66, "energy": 0.44, "empathy": 0.54, "professionalism": 0.84},
+        "semantic": {"clarity": 0.86, "assertiveness": 0.64, "hedging": 0.42, "structure": 0.84}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.06, "professionalism": 0.04},
+        "semantic": {"clarity": 0.05, "assertiveness": 0.06, "hedging": 0.06, "structure": 0.05}
+      },
+      "vad_mu": {"valence": 0.58, "arousal": 0.44, "dominance": 0.62},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.65, "energy": 0.45, "polish": 0.82, "authentic": 0.55, "heritage": 0.25, "futuristic": 0.30, "playful": 0.10},
+      "l2_mu": {"scm": {"warmth": 0.65, "competence": 0.80}, "rft": {"promotion": 0.55, "prevention": 0.45}},
+      "guards": {
+        "must": ["관찰(사실)→영향→제안(옵션)"],
+        "avoid": ["인신공격", "비꼼"]
+      }
+    },
+    {
+      "card_id": "TC09",
+      "display_name": "일정 조정(협업+선택지)",
+      "genre_words": ["일정 조정", "선택지 제시", "협업"],
+      "best_for": ["미팅 변경", "마감 조정", "업무 우선순위 합의"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.60, "energy": 0.40, "empathy": 0.34, "professionalism": 0.88},
+        "semantic": {"clarity": 0.90, "assertiveness": 0.60, "hedging": 0.38, "structure": 0.90}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.06, "professionalism": 0.04},
+        "semantic": {"clarity": 0.04, "assertiveness": 0.06, "hedging": 0.06, "structure": 0.04}
+      },
+      "vad_mu": {"valence": 0.54, "arousal": 0.38, "dominance": 0.60},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.55, "energy": 0.38, "polish": 0.88, "authentic": 0.50, "heritage": 0.25, "futuristic": 0.30, "playful": 0.05},
+      "l2_mu": {"scm": {"warmth": 0.55, "competence": 0.88}, "rft": {"promotion": 0.40, "prevention": 0.60}},
+      "guards": {
+        "must": ["가능 시간 2안", "결정 요청 1문장"],
+        "avoid": ["모호한 부탁", "상대 탓"]
+      }
+    },
+    {
+      "card_id": "TC10",
+      "display_name": "리마인드(공손하지만 확실)",
+      "genre_words": ["리마인드", "정중한 재촉", "확실하게"],
+      "best_for": ["회신 촉구", "진행 체크", "지연 관리"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.56, "energy": 0.46, "empathy": 0.30, "professionalism": 0.88},
+        "semantic": {"clarity": 0.92, "assertiveness": 0.72, "hedging": 0.34, "structure": 0.86}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.06, "professionalism": 0.04},
+        "semantic": {"clarity": 0.04, "assertiveness": 0.06, "hedging": 0.06, "structure": 0.05}
+      },
+      "vad_mu": {"valence": 0.50, "arousal": 0.46, "dominance": 0.70},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.50, "energy": 0.45, "polish": 0.88, "authentic": 0.45, "heritage": 0.25, "futuristic": 0.30, "playful": 0.05},
+      "l2_mu": {"scm": {"warmth": 0.45, "competence": 0.88}, "rft": {"promotion": 0.30, "prevention": 0.70}},
+      "guards": {
+        "must": ["요청사항 1개", "데드라인/다음 스텝 1개"],
+        "avoid": ["비꼼", "압박 과잉"]
+      }
+    },
+    {
+      "card_id": "TC11",
+      "display_name": "칭찬+인정(구체 칭찬)",
+      "genre_words": ["구체 칭찬", "인정", "감사"],
+      "best_for": ["관계 강화", "협업 만족도", "피드백 균형"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.86, "energy": 0.52, "empathy": 0.70, "professionalism": 0.72},
+        "semantic": {"clarity": 0.78, "assertiveness": 0.40, "hedging": 0.50, "structure": 0.70}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.05, "energy": 0.06, "empathy": 0.06, "professionalism": 0.06},
+        "semantic": {"clarity": 0.06, "assertiveness": 0.07, "hedging": 0.06, "structure": 0.06}
+      },
+      "vad_mu": {"valence": 0.78, "arousal": 0.52, "dominance": 0.46},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.88, "energy": 0.55, "polish": 0.65, "authentic": 0.60, "heritage": 0.25, "futuristic": 0.20, "playful": 0.25},
+      "l2_mu": {"scm": {"warmth": 0.90, "competence": 0.55}, "rft": {"promotion": 0.70, "prevention": 0.30}},
+      "guards": {
+        "must": ["구체 포인트 1개", "나에게 준 효과 1개"],
+        "avoid": ["과장", "빈말"]
+      }
+    },
+    {
+      "card_id": "TC12",
+      "display_name": "갈등 완충(진정+합의)",
+      "genre_words": ["갈등 완화", "진정", "합의 제안"],
+      "best_for": ["오해", "긴장 완화", "대화 재개"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.76, "energy": 0.30, "empathy": 0.74, "professionalism": 0.80},
+        "semantic": {"clarity": 0.82, "assertiveness": 0.52, "hedging": 0.58, "structure": 0.78}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.06, "professionalism": 0.05},
+        "semantic": {"clarity": 0.06, "assertiveness": 0.06, "hedging": 0.06, "structure": 0.06}
+      },
+      "vad_mu": {"valence": 0.66, "arousal": 0.28, "dominance": 0.46},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.78, "energy": 0.28, "polish": 0.78, "authentic": 0.60, "heritage": 0.25, "futuristic": 0.20, "playful": 0.10},
+      "l2_mu": {"scm": {"warmth": 0.85, "competence": 0.60}, "rft": {"promotion": 0.35, "prevention": 0.65}},
+      "guards": {
+        "must": ["상대 의도 선해석 1문장", "합의 옵션 1개"],
+        "avoid": ["책임 추궁", "비꼼"]
+      }
+    },
+    {
+      "card_id": "TC13",
+      "display_name": "협상(윈윈+조건)",
+      "genre_words": ["윈윈", "조건 제시", "협상"],
+      "best_for": ["역할/범위 조정", "리소스", "데드라인"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.52, "energy": 0.50, "empathy": 0.28, "professionalism": 0.90},
+        "semantic": {"clarity": 0.90, "assertiveness": 0.74, "hedging": 0.34, "structure": 0.92}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.06, "professionalism": 0.04},
+        "semantic": {"clarity": 0.04, "assertiveness": 0.06, "hedging": 0.06, "structure": 0.04}
+      },
+      "vad_mu": {"valence": 0.52, "arousal": 0.52, "dominance": 0.70},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.50, "energy": 0.52, "polish": 0.90, "authentic": 0.45, "heritage": 0.25, "futuristic": 0.30, "playful": 0.05},
+      "l2_mu": {"scm": {"warmth": 0.40, "competence": 0.92}, "rft": {"promotion": 0.55, "prevention": 0.45}},
+      "guards": {
+        "must": ["요구/양보 조건 명시", "다음 스텝 합의"],
+        "avoid": ["감정 협박", "모호한 압박"]
+      }
+    },
+    {
+      "card_id": "TC14",
+      "display_name": "유쾌하게 분위기 환기(가벼운 유머)",
+      "genre_words": ["유쾌하게", "가벼운 농담", "분위기 환기"],
+      "best_for": ["긴장 완화", "가벼운 관계", "팀 분위기"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.80, "energy": 0.66, "empathy": 0.52, "professionalism": 0.58},
+        "semantic": {"clarity": 0.70, "assertiveness": 0.36, "hedging": 0.52, "structure": 0.58}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.06, "professionalism": 0.08},
+        "semantic": {"clarity": 0.07, "assertiveness": 0.08, "hedging": 0.07, "structure": 0.07}
+      },
+      "vad_mu": {"valence": 0.78, "arousal": 0.66, "dominance": 0.46},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.80, "energy": 0.70, "polish": 0.55, "authentic": 0.55, "heritage": 0.20, "futuristic": 0.20, "playful": 0.78},
+      "l2_mu": {"scm": {"warmth": 0.85, "competence": 0.45}, "rft": {"promotion": 0.70, "prevention": 0.30}},
+      "guards": {
+        "must": ["조롱/희화화 금지", "업무 핵심 문장은 별도로 명확히"],
+        "avoid": ["비꼼", "내부자 농담(배제)"]
+      }
+    },
+    {
+      "card_id": "TC15",
+      "display_name": "공지/보고(두괄식+명료)",
+      "genre_words": ["공지", "보고", "두괄식"],
+      "best_for": ["슬랙 공지", "메일 공지", "상태 공유"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.44, "energy": 0.44, "empathy": 0.18, "professionalism": 0.94},
+        "semantic": {"clarity": 0.96, "assertiveness": 0.64, "hedging": 0.24, "structure": 0.94}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.05, "energy": 0.06, "empathy": 0.05, "professionalism": 0.03},
+        "semantic": {"clarity": 0.03, "assertiveness": 0.06, "hedging": 0.05, "structure": 0.03}
+      },
+      "vad_mu": {"valence": 0.50, "arousal": 0.46, "dominance": 0.62},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.40, "energy": 0.45, "polish": 0.95, "authentic": 0.40, "heritage": 0.25, "futuristic": 0.25, "playful": 0.05},
+      "l2_mu": {"scm": {"warmth": 0.30, "competence": 0.95}, "rft": {"promotion": 0.40, "prevention": 0.60}},
+      "guards": {
+        "must": ["요약 1줄", "영향/대상", "일정/다음 행동"],
+        "avoid": ["장황", "감정 섞인 추측"]
+      }
+    },
+    {
+      "card_id": "TC16",
+      "display_name": "도움 요청(지원+감사)",
+      "genre_words": ["도움 요청", "지원 요청", "감사"],
+      "best_for": ["리뷰 요청", "피드백 요청", "지원 부탁"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.78, "energy": 0.46, "empathy": 0.60, "professionalism": 0.78},
+        "semantic": {"clarity": 0.82, "assertiveness": 0.44, "hedging": 0.62, "structure": 0.78}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.06, "professionalism": 0.05},
+        "semantic": {"clarity": 0.06, "assertiveness": 0.07, "hedging": 0.06, "structure": 0.06}
+      },
+      "vad_mu": {"valence": 0.70, "arousal": 0.46, "dominance": 0.42},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.80, "energy": 0.45, "polish": 0.75, "authentic": 0.55, "heritage": 0.25, "futuristic": 0.20, "playful": 0.15},
+      "l2_mu": {"scm": {"warmth": 0.85, "competence": 0.65}, "rft": {"promotion": 0.55, "prevention": 0.45}},
+      "guards": {
+        "must": ["요청 범위/시간", "선택권", "감사"],
+        "avoid": ["부담 전가", "즉시성 강요"]
+      }
+    },
+    {
+      "card_id": "TC17",
+      "display_name": "셀프톡(자책↓ 실행↑)",
+      "genre_words": ["나에게 친절하게", "실행으로", "자책 멈춤"],
+      "best_for": ["미루기", "불안", "자책 완화"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.84, "energy": 0.44, "empathy": 0.82, "professionalism": 0.50},
+        "semantic": {"clarity": 0.78, "assertiveness": 0.54, "hedging": 0.52, "structure": 0.70}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.05, "energy": 0.06, "empathy": 0.05, "professionalism": 0.08},
+        "semantic": {"clarity": 0.06, "assertiveness": 0.06, "hedging": 0.06, "structure": 0.06}
+      },
+      "vad_mu": {"valence": 0.72, "arousal": 0.40, "dominance": 0.52},
+      "vad_sigma": {"valence": 0.10, "arousal": 0.10, "dominance": 0.12},
+      "style7d_anchor_mu": {"warmth": 0.85, "energy": 0.40, "polish": 0.45, "authentic": 0.75, "heritage": 0.25, "futuristic": 0.20, "playful": 0.15},
+      "l2_mu": {"scm": {"warmth": 0.90, "competence": 0.55}, "rft": {"promotion": 0.55, "prevention": 0.45}},
+      "guards": {
+        "must": ["재평가 1문장", "실행의도 1문장", "가치/한계 1문장"],
+        "avoid": ["자기비하", "완벽주의 강요"]
+      }
+    },
+    {
+      "card_id": "TC18",
+      "display_name": "긴급 대응(침착+우선순위)",
+      "genre_words": ["긴급", "침착하게", "우선순위"],
+      "best_for": ["장애/이슈", "급한 요청", "위기 커뮤니케이션"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.38, "energy": 0.66, "empathy": 0.18, "professionalism": 0.92},
+        "semantic": {"clarity": 0.94, "assertiveness": 0.72, "hedging": 0.20, "structure": 0.94}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.05, "empathy": 0.05, "professionalism": 0.03},
+        "semantic": {"clarity": 0.03, "assertiveness": 0.06, "hedging": 0.05, "structure": 0.03}
+      },
+      "vad_mu": {"valence": 0.46, "arousal": 0.66, "dominance": 0.70},
+      "vad_sigma": {"valence": 0.10, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.35, "energy": 0.68, "polish": 0.92, "authentic": 0.45, "heritage": 0.20, "futuristic": 0.30, "playful": 0.05},
+      "l2_mu": {"scm": {"warmth": 0.25, "competence": 0.95}, "rft": {"promotion": 0.30, "prevention": 0.70}},
+      "guards": {
+        "must": ["현상 요약", "우선순위 1~3", "다음 업데이트 시간"],
+        "avoid": ["패닉 문장", "책임 추궁"]
+      }
+    },
+    {
+      "card_id": "TC19",
+      "display_name": "설득/제안(비전+이득)",
+      "genre_words": ["제안", "설득", "이득 강조"],
+      "best_for": ["아이디어 제안", "내부 설득", "상향 보고"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.50, "energy": 0.62, "empathy": 0.28, "professionalism": 0.86},
+        "semantic": {"clarity": 0.88, "assertiveness": 0.62, "hedging": 0.34, "structure": 0.90}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.06, "professionalism": 0.04},
+        "semantic": {"clarity": 0.05, "assertiveness": 0.06, "hedging": 0.06, "structure": 0.04}
+      },
+      "vad_mu": {"valence": 0.58, "arousal": 0.62, "dominance": 0.62},
+      "vad_sigma": {"valence": 0.08, "arousal": 0.08, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.45, "energy": 0.62, "polish": 0.85, "authentic": 0.45, "heritage": 0.20, "futuristic": 0.35, "playful": 0.10},
+      "l2_mu": {"scm": {"warmth": 0.35, "competence": 0.90}, "rft": {"promotion": 0.70, "prevention": 0.30}},
+      "guards": {
+        "must": ["문제→해결→효과(숫자/시간)", "리스크/대안 1개"],
+        "avoid": ["근거 없는 확신", "상대 압박"]
+      }
+    },
+    {
+      "card_id": "TC20",
+      "display_name": "냉정한 사실 통보(감정 배제)",
+      "genre_words": ["냉정하게", "사실 통보", "감정 배제"],
+      "best_for": ["불가 통보", "정책/규정 안내", "결정 전달"],
+      "qpe_mu": {
+        "affect": {"warmth": 0.22, "energy": 0.42, "empathy": 0.10, "professionalism": 0.92},
+        "semantic": {"clarity": 0.94, "assertiveness": 0.84, "hedging": 0.14, "structure": 0.86}
+      },
+      "qpe_sigma": {
+        "affect": {"warmth": 0.06, "energy": 0.06, "empathy": 0.05, "professionalism": 0.03},
+        "semantic": {"clarity": 0.03, "assertiveness": 0.05, "hedging": 0.05, "structure": 0.05}
+      },
+      "vad_mu": {"valence": 0.40, "arousal": 0.40, "dominance": 0.84},
+      "vad_sigma": {"valence": 0.10, "arousal": 0.10, "dominance": 0.10},
+      "style7d_anchor_mu": {"warmth": 0.20, "energy": 0.42, "polish": 0.92, "authentic": 0.40, "heritage": 0.25, "futuristic": 0.25, "playful": 0.00},
+      "l2_mu": {"scm": {"warmth": 0.10, "competence": 0.95}, "rft": {"promotion": 0.20, "prevention": 0.80}},
+      "guards": {
+        "must": ["결정 1문장", "사유(규정/기준) 1문장", "대안/다음 절차"],
+        "avoid": ["비난", "감정적 표현"]
+      }
+    }
+  ]
+}
