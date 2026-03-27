@@ -53,14 +53,24 @@ export const N3_SCHEMA = {
                   axes_alignment: { 
                     type: "object",
                     properties: {
-                      affect: { type: "object" },
-                      semantic: { type: "object" }
-                    }
+                      affect: { 
+                        type: "object", 
+                        properties: { warmth: {type:"number"}, energy: {type:"number"}, empathy: {type:"number"}, professionalism: {type:"number"} }, 
+                        required: ["warmth", "energy", "empathy", "professionalism"] 
+                      },
+                      semantic: { 
+                        type: "object", 
+                        properties: { clarity: {type:"number"}, assertiveness: {type:"number"}, hedging: {type:"number"}, structure: {type:"number"} }, 
+                        required: ["clarity", "assertiveness", "hedging", "structure"] 
+                      }
+                    },
+                    required: ["affect", "semantic"]
                   }
-                }
+                },
+                required: ["axes_alignment"]
               }
             },
-            required: ["variant_id", "text", "one_line_rationale"]
+            required: ["variant_id", "text", "one_line_rationale", "self_check"]
           }
         }
       },
